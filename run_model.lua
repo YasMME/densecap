@@ -74,7 +74,7 @@ function run_image(model, img_path, opt, dtype)
   img_caffe:add(-1, vgg_mean)
 
   -- Run the model forward
-  local boxes, scores, captions = model:forward_test(img_caffe:type(dtype))
+  local boxes, scores, captions, feats = model:forward_test(img_caffe:type(dtype))
   local boxes_xywh = box_utils.xcycwh_to_xywh(boxes)
 
   local out = {
@@ -82,6 +82,7 @@ function run_image(model, img_path, opt, dtype)
     boxes = boxes_xywh,
     scores = scores,
     captions = captions,
+    feats = feats
   }
   return out
 end
@@ -91,6 +92,7 @@ function result_to_json(result)
   out.boxes = result.boxes:float():totable()
   out.scores = result.scores:float():view(-1):totable()
   out.captions = result.captions
+  out.feats = result.feats:float():totable()
   return out
 end
 

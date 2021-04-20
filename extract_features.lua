@@ -81,6 +81,7 @@ local function main()
   local D = 4096 -- TODO this is specific to VG
   local all_boxes = torch.FloatTensor(N, M, 4):zero()
   local all_feats = torch.FloatTensor(N, M, D):zero()
+  local im_paths = {}
   
   -- Actually run the model
   for i, image_path in ipairs(image_paths) do
@@ -89,6 +90,8 @@ local function main()
     all_boxes[i]:copy(boxes[{{1, M}}])
     all_feats[i]:copy(feats[{{1, M}}])
   end
+
+
 
   -- Write data to the HDF5 file
   local h5_file = hdf5.open(opt.output_h5)

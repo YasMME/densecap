@@ -22,7 +22,7 @@ Returns:
 function utils.setup_gpus(gpu, use_cudnn)
   local dtype = 'torch.FloatTensor'
   local actual_use_cudnn = false
-  if gpu >= 0 then
+  if gpu > 0 then
     require 'cutorch'
     require 'cunn'
     cutorch.setDevice(gpu + 1)
